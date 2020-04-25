@@ -1,0 +1,142 @@
+/* стили для страницы profile */
+.card {
+    background: none;
+}
+
+#main {
+    padding: 0;
+}
+
+section {
+    padding: 0 0px 0 15px;
+}
+
+.grid-stack-item-removing {
+    opacity: 0.8;
+    filter: blur(5px);
+}
+
+.logo {
+    display: inline;
+    margin-right: 15px;
+}
+
+#trash {
+    background-color: #cc6857 ;
+}
+
+.pageWidget {
+    background-color: #6cad84;
+}
+
+.linkWidget {
+    background-color: #6f42c1;
+}
+
+.stubWidget {
+    background-color: transparent;
+    border: 1px solid black;
+}
+
+#advanced-grid {
+    min-height: 300px; /* минимальная высота для панели с плитками, необходима для поддержки возможности добавлять плитки, если все плитки были удалены или их изначально не было */
+}
+
+/* отображение плиток после добавление на панель */
+/* 2019-12-24 */
+#advanced-grid .grid-stack-item {
+    border: 1px solid black;
+}
+
+#advanced-grid .grid-stack-item .tileIcon {
+    display: none;
+}
+
+#trash {
+    /*padding: 15px;*/
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+#dashboardActions {
+    border-right: 1px dashed white;
+    display: none; /* по умолчанию панель добавления/удаления плиток отключена */
+    /*width: 137px;*/
+}
+
+.actions-item {
+    padding: 0;
+}
+
+#dashboardActions .pageWidget {
+    margin-bottom: 15px;
+}
+
+#dashboardActions .linkWidget {
+    margin-bottom: 15px;
+}
+
+#advanced-grid .grid-stack-item .card-body {
+    padding: 0 0 0 0;
+}
+
+.card-body table {
+    height: 100%;
+    width: 100%;
+}
+
+#save-changes {
+    display: none;
+}
+
+#cancel-changes {
+    display: none;
+}
+
+.navbar-edit-active a {
+    color: red !important;
+    font-weight: bold !important;
+}
+
+.breadcrumb-nav-bar {
+    top: 48px;
+    left: 0;
+    padding-bottom: 8px;
+    padding-top: 1px;
+}
+
+.breadcrumb {
+    border: none;
+    font-size: 12px;
+    text-transform: none;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 0;
+    /*background: none;*/
+}
+
+#advancedDemo {
+    /*left: 20px;*/
+}
+
+body {
+    background-color: #008cba;
+}
+
+#advanced-grid .stubWidget table td {
+    display: none;
+}
+
+.linkWidget, .pageWidget {
+    cursor: pointer;
+}
+
+.tileClicked {
+    background-color: black !important;
+}
+
+.tileClicked td {
+    color: white !important;
+}

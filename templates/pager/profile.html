@@ -1,0 +1,517 @@
+{% extends './base.html' %}
+{% load static %}
+{% block title %}Профиль - {{ user }}{% endblock %}
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <!--<a class="navbar-brand" href="{% url package|add:':index' %}">
+            <ion-icon name="ios-home" style="vertical-align: middle" role="img" class="md hydrated" aria-label="grid"></ion-icon>В начало
+        </a>-->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li id="settings-btn" class="nav-item nav-item-highlight">
+                    <a class="nav-link" href="#">
+                        <ion-icon name="settings" style="vertical-align: middle" role="img" class="md hydrated" aria-label="grid"></ion-icon>
+                        Настройки
+                    </a>
+                </li>
+                <li id="calendar-btn" class="nav-item nav-item-highlight">
+                    <a  class="nav-link" href="#">
+                        <ion-icon name="calendar" style="vertical-align: middle" role="img" class="md hydrated" aria-label="grid"></ion-icon>
+                        <input type="date" id="calendar" />
+                    </a>
+                </li>
+                <li id="edit-mode" class="nav-item nav-item-highlight">
+                    <a  class="nav-link" href="#">
+                        <ion-icon name="checkmark-circle-outline" style="vertical-align: middle" role="img" class="md hydrated" aria-label="grid"></ion-icon>
+                        Правка
+                    </a>
+                </li>
+                <li id="save-changes" class="nav-item nav-item-highlight">
+                    <a  class="nav-link" href="#">
+                        <ion-icon name="ios-save" style="vertical-align: middle" role="img" class="md hydrated" aria-label="grid"></ion-icon>
+                        Сохранить
+                    </a>
+                </li>
+                <li id="cancel-changes" class="nav-item nav-item-highlight">
+                    <a class="nav-link" href="#">
+                        <ion-icon name="refresh-circle" style="vertical-align: middle" role="img" class="md hydrated" aria-label="grid"></ion-icon>
+                        Отменить
+                    </a>
+                </li>
+            </ul>
+            <div class="my-2 my-lg-0">
+                <div>{{ user.username }}</div>
+                <a class="button text-white" href="{% url package|add:':logout' %}">Выход</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- создает отступ сверху от меню навигации -->
+    <div class="container-fluid" style="padding: 28px 2rem;">
+	</div>
+
+    {% block breadcrumbs %}
+        {% if breadcrumbs %}
+            <nav aria-label="breadcrumb" class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top breadcrumb-nav-bar">
+              <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url package|add:':profile' username=username tile_path='' %}">Home</a></li>
+                  {% for item in breadcrumbs.items %}
+                      <li class="breadcrumb-item"><a href="{{ item.url }}">{{ item.title }}</a></li>
+                  {% endfor %}
+                  <li class="breadcrumb-item active" aria-current="page">{{ breadcrumbs.last }}</li>
+              </ol>
+            </nav>
+            <!-- создает отступ сверху от хлебных крошек -->
+            <div class="container-fluid" style="padding: 10px 2rem;">
+            </div>
+        {% endif %}
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+    <main id="main" role="main" class="container-fluid">
+        {% csrf_token %}
+        <section id="advancedDemo" class="bg-primary">
+            <!-- дашборд и кноки -->
+            <div class="row" style="margin: 0 0 0 0;">
+
+                <!-- кнопки слева от дашборда -->
+                <div class="col-md-1 d-none" id="dashboardActions">
+                    <div id="trash" class="text-center text-white">
+                        <div class="card-body grid-stack-item actions-item">
+                            <div class="tileIcon">
+                                <ion-icon name="trash" role="img" class="md hydrated" aria-label="trash"></ion-icon>
+                            </div>
+                            <table>
+                                <td class="text-center">Удалить!</td>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="text-center text-white pageWidget newWidget grid-stack-item">
+                        <div class="card-body grid-stack-item-content actions-item">
+                            <div class="tileIcon">
+                                <ion-icon name="add-circle" role="img" aria-label="add circle"></ion-icon>
+                            </div>
+                            <!-- данные плитки -->
+                            <div style="display: none;">
+                                <div class="tileDescription"></div><!-- полное название плитки -->
+                                <div class="tileBgcolor"></div><!-- цвет фона плитки в формате #RRGGBB -->
+                                <div class="tileBorderRightWidth"></div><!-- ширина правой границы плитки в px -->
+                                <div class="tileBorderLeftWidth"></div><!-- ширина левой границы плитки в px -->
+                                <div class="tileBorderTopWidth"></div><!-- ширина верхней границы плитки в px -->
+                                <div class="tileBorderBottomWidth"></div><!-- ширина нижней границы плитки в px -->
+                                <div class="tileBorderRightColor"></div><!-- цвет правой границы плитки в формате #RRGGBB -->
+                                <div class="tileBorderLeftColor"></div><!-- цвет левой границы плитки в формате #RRGGBB -->
+                                <div class="tileBorderTopColor"></div><!-- цвет верхней границы плитки в формате #RRGGBB -->
+                                <div class="tileBorderBottomColor"></div><!-- цвет нижней границы плитки в формате #RRGGBB -->
+                                <div class="tileTitleFontSize"></div><!-- размер шрифта заголовка плитки в px -->
+                                <div class="tileTitleFontColor"></div><!-- цвет шрифта заголовка плитки в формате #RRGGBB -->
+                            </div>
+                            <!-- end данные плитки -->
+                            <table>
+                                <td class="tileTitle text-center">Страница</td>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="text-center text-white linkWidget newWidget grid-stack-item">
+                        <div class="card-body grid-stack-item-content actions-item">
+                            <div class="tileIcon">
+                                <ion-icon name="add-circle" role="img" class="md hydrated" aria-label="add circle"></ion-icon>
+                            </div>
+                            <!-- данные плитки -->
+                            <div style="display: none;">
+                                <div class="tileDescription"></div><!-- полное название плитки -->
+                                <div class="tileBgcolor"></div><!-- цвет фона плитки в формате #RRGGBB -->
+                                <div class="url_pattern"></div><!-- url плитки-ссылки -->
+                                <div class="tileBorderRightWidth"></div><!-- ширина правой границы плитки в px -->
+                                <div class="tileBorderLeftWidth"></div><!-- ширина левой границы плитки в px -->
+                                <div class="tileBorderTopWidth"></div><!-- ширина верхней границы плитки в px -->
+                                <div class="tileBorderBottomWidth"></div><!-- ширина нижней границы плитки в px -->
+                                <div class="tileBorderRightColor"></div><!-- цвет правой границы плитки в формате #RRGGBB -->
+                                <div class="tileBorderLeftColor"></div><!-- цвет левой границы плитки в формате #RRGGBB -->
+                                <div class="tileBorderTopColor"></div><!-- цвет верхней границы плитки в формате #RRGGBB -->
+                                <div class="tileBorderBottomColor"></div><!-- цвет нижней границы плитки в формате #RRGGBB -->
+                                <div class="tileTitleFontSize"></div><!-- размер шрифта заголовка плитки в px -->
+                                <div class="tileTitleFontColor"></div><!-- цвет шрифта заголовка плитки в формате #RRGGBB -->
+                            </div>
+                            <!-- end данные плитки -->
+                            <table>
+                                <td class="tileTitle text-center">Ссылка</td>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="text-center text-white stubWidget newWidget grid-stack-item">
+                        <div class="card-body grid-stack-item-content actions-item">
+                            <div class="tileIcon">
+                                <ion-icon name="add-circle" role="img" class="md hydrated" aria-label="add circle"></ion-icon>
+                            </div>
+                            <!-- данные плитки -->
+                            <div style="display: none;">
+                                <div class="tileDescription"></div><!-- полное название плитки -->
+                                <div class="tileBgcolor"></div><!-- цвет фона плитки в формате #RRGGBB -->
+                                <div class="tileBorderRightWidth"></div><!-- ширина правой границы плитки в px -->
+                                <div class="tileBorderLeftWidth"></div><!-- ширина левой границы плитки в px -->
+                                <div class="tileBorderTopWidth"></div><!-- ширина верхней границы плитки в px -->
+                                <div class="tileBorderBottomWidth"></div><!-- ширина нижней границы плитки в px -->
+                                <div class="tileBorderRightColor"></div><!-- цвет правой границы плитки в формате #RRGGBB -->
+                                <div class="tileBorderLeftColor"></div><!-- цвет левой границы плитки в формате #RRGGBB -->
+                                <div class="tileBorderTopColor"></div><!-- цвет верхней границы плитки в формате #RRGGBB -->
+                                <div class="tileBorderBottomColor"></div><!-- цвет нижней границы плитки в формате #RRGGBB -->
+                            </div>
+                            <!-- end данные плитки -->
+                            <table>
+                                <td class="tileTitle text-center">Заглушка</td>
+                            </table>
+                        </div>
+                    </div>
+                </div><!-- end div class="col-md-1 d-none"-->
+                <!-- конец кнопки слева от дашборда -->
+
+
+                <!-- дашборд -->
+                <div id="dashboardMain" class="col-sm-12 col-md-10" style="padding: 0 20px 10px 5px; margin: 0 0 0 0">
+                    <!-- рамка дашборда -->
+                    <div>
+                        <!-- панель для плиток -->
+                        <div class="grid-stack grid-stack-animate ui-droppable" id="advanced-grid" data-gs-width="12" data-gs-animate="yes">
+
+                            <!-- плитки -->
+                            {% for page in pages %}
+                                <div class="text-center text-white pageWidget grid-stack-item" data-gs-x="{{ page.data_gs_x }}" data-gs-y="{{ page.data_gs_y }}" data-gs-width="{{ page.data_gs_width }}" data-gs-height="{{ page.data_gs_height }}" data-gs-id="{{ page.id }}"
+                                     style="{{ page.style_bgcolor }}{{ page.style_border_right_width }}{{ page.style_border_left_width }}{{ page.style_border_top_width }}{{ page.style_border_bottom_width }}{{ page.style_border_right_color }}{{ page.style_border_left_color }}{{ page.style_border_top_color }}{{ page.style_border_bottom_color }}">
+                                    <div class="card-body overflow-hidden grid-stack-item-content">
+                                        <!-- данные плитки -->
+                                        <div style="display: none;">
+                                            <div class="tilePath">{{ page.path }}</div><!-- путь к странице с элементом -->
+                                            <div class="tileDescription">{{ page.description }}</div><!-- полное название плитки -->
+                                            <div class="tileBgcolor">{{ page.bgcolor }}</div><!-- цвет фона плитки в формате #RRGGBB -->
+                                            <div class="tileBorderRightWidth">{{ page.border_right_width }}</div><!-- ширина правой границы плитки в px -->
+                                            <div class="tileBorderLeftWidth">{{ page.border_left_width }}</div><!-- ширина левой границы плитки в px -->
+                                            <div class="tileBorderTopWidth">{{ page.border_top_width }}</div><!-- ширина верхней границы плитки в px -->
+                                            <div class="tileBorderBottomWidth">{{ page.border_bottom_width }}</div><!-- ширина нижней границы плитки в px -->
+                                            <div class="tileBorderRightColor">{{ page.border_right_color }}</div><!-- цвет правой границы плитки в формате #RRGGBB -->
+                                            <div class="tileBorderLeftColor">{{ page.border_left_color }}</div><!-- цвет левой границы плитки в формате #RRGGBB -->
+                                            <div class="tileBorderTopColor">{{ page.border_top_color }}</div><!-- цвет верхней границы плитки в формате #RRGGBB -->
+                                            <div class="tileBorderBottomColor">{{ page.border_bottom_color }}</div><!-- цвет нижней границы плитки в формате #RRGGBB -->
+                                            <div class="tileTitleFontSize">{{ page.title_font_size }}</div><!-- размер шрифта заголовка плитки в px -->
+                                            <div class="tileTitleFontColor">{{ page.title_font_color }}</div><!-- цвет шрифта заголовка плитки в формате #RRGGBB -->
+                                        </div>
+                                        <!-- end данные плитки -->
+                                        <table>
+                                            <td class="tileTitle align-middle" style="{{ page.style_title_font_size }}{{ page.style_title_font_color }}">{{ page.title }}</td>
+                                        </table>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% for link in links %}
+                                <div class="text-center text-white linkWidget grid-stack-item" data-gs-x="{{ link.data_gs_x }}" data-gs-y="{{ link.data_gs_y }}" data-gs-width="{{ link.data_gs_width }}" data-gs-height="{{ link.data_gs_height }}" data-gs-id="{{ link.id }}"
+                                     style="{{ link.style_bgcolor }}{{ link.style_border_right_width }}{{ link.style_border_left_width }}{{ link.style_border_top_width }}{{ link.style_border_bottom_width }}{{ link.style_border_right_color }}{{ link.style_border_left_color }}{{ link.style_border_top_color }}{{ link.style_border_bottom_color }}">
+                                    <div class="card-body overflow-hidden grid-stack-item-content">
+                                        <!-- данные плитки -->
+                                        <div style="display: none;">
+                                            <div class="tilePath">{{ link.path }}</div><!-- путь к странице с элементом -->
+                                            <div class="tileDescription">{{ link.description }}</div><!-- полное название плитки -->
+                                            <div class="url_pattern">{{ link.url_pattern }}</div><!-- url плитки-ссылки -->
+                                            <div class="tileBgcolor">{{ link.bgcolor }}</div><!-- цвет фона плитки в формате #RRGGBB -->
+                                            <div class="tileBorderRightWidth">{{ link.border_right_width }}</div><!-- ширина правой границы плитки в px -->
+                                            <div class="tileBorderLeftWidth">{{ link.border_left_width }}</div><!-- ширина левой границы плитки в px -->
+                                            <div class="tileBorderTopWidth">{{ link.border_top_width }}</div><!-- ширина верхней границы плитки в px -->
+                                            <div class="tileBorderBottomWidth">{{ link.border_bottom_width }}</div><!-- ширина нижней границы плитки в px -->
+                                            <div class="tileBorderRightColor">{{ link.border_right_color }}</div><!-- цвет правой границы плитки в формате #RRGGBB -->
+                                            <div class="tileBorderLeftColor">{{ link.border_left_color }}</div><!-- цвет левой границы плитки в формате #RRGGBB -->
+                                            <div class="tileBorderTopColor">{{ link.border_top_color }}</div><!-- цвет верхней границы плитки в формате #RRGGBB -->
+                                            <div class="tileBorderBottomColor">{{ link.border_bottom_color }}</div><!-- цвет нижней границы плитки в формате #RRGGBB -->
+                                            <div class="tileTitleFontSize">{{ link.title_font_size }}</div><!-- размер шрифта заголовка плитки в px -->
+                                            <div class="tileTitleFontColor">{{ link.title_font_color }}</div><!-- цвет шрифта заголовка плитки в формате #RRGGBB -->
+                                        </div>
+                                        <!-- end данные плитки -->
+                                        <table>
+                                            <td class="tileTitle align-middle" style="{{ link.style_title_font_size }}{{ link.style_title_font_color }}">{{ link.title }}</td>
+                                        </table>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% for stub in stubs %}
+                                <div class="text-center text-white stubWidget grid-stack-item" data-gs-x="{{ stub.data_gs_x }}" data-gs-y="{{ stub.data_gs_y }}" data-gs-width="{{ stub.data_gs_width }}" data-gs-height="{{ stub.data_gs_height }}" data-gs-id="{{ stub.id }}"
+                                     style="{{ stub.style_bgcolor }}{{ stub.style_border_right_width }}{{ stub.style_border_left_width }}{{ stub.style_border_top_width }}{{ stub.style_border_bottom_width }}{{ stub.style_border_right_color }}{{ stub.style_border_left_color }}{{ stub.style_border_top_color }}{{ stub.style_border_bottom_color }}">
+                                    <div class="card-body overflow-hidden grid-stack-item-content">
+                                        <!-- данные плитки -->
+                                        <div style="display: none;">
+                                            <div class="tilePath">{{ stub.path }}</div><!-- путь к странице с элементом -->
+                                            <div class="tileDescription">{{ stub.description }}</div><!-- полное название плитки -->
+                                            <div class="tileBgcolor">{{ stub.bgcolor }}</div><!-- цвет фона плитки в формате #RRGGBB -->
+                                            <div class="tileBorderRightWidth">{{ stub.border_right_width }}</div><!-- ширина правой границы плитки в px -->
+                                            <div class="tileBorderLeftWidth">{{ stub.border_left_width }}</div><!-- ширина левой границы плитки в px -->
+                                            <div class="tileBorderTopWidth">{{ stub.border_top_width }}</div><!-- ширина верхней границы плитки в px -->
+                                            <div class="tileBorderBottomWidth">{{ stub.border_bottom_width }}</div><!-- ширина нижней границы плитки в px -->
+                                            <div class="tileBorderRightColor">{{ stub.border_right_color }}</div><!-- цвет правой границы плитки в формате #RRGGBB -->
+                                            <div class="tileBorderLeftColor">{{ stub.border_left_color }}</div><!-- цвет левой границы плитки в формате #RRGGBB -->
+                                            <div class="tileBorderTopColor">{{ stub.border_top_color }}</div><!-- цвет верхней границы плитки в формате #RRGGBB -->
+                                            <div class="tileBorderBottomColor">{{ stub.border_bottom_color }}</div><!-- цвет нижней границы плитки в формате #RRGGBB -->
+                                        </div>
+                                        <!-- end данные плитки -->
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <!-- end плитки -->
+
+                        </div>
+                        <!-- end панель для плиток -->
+                    </div>
+                    <!-- конец рамка дашборда -->
+                </div>
+                <!-- конец дашборд -->
+
+                <div id="tile-description" class="col-md-1" style="padding: 10px 10px 10px 10px; margin: 0 0 0 0">
+                    <div class="text-white" id="tileDescription">
+
+                    </div>
+                </div>
+            </div><!--end div class="row -->
+            <!-- дашбор и кноки -->
+
+
+
+        </section><!-- end section id="advancedDemo" -->
+
+	</main>
+
+    {% block edit_page_dialog %}
+        <div class="modal fade" id="editPageForm" tabindex="-1" role="dialog" aria-labelledby="editPageFormLabel"
+          aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold">Редактирование страницы</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mx-3">
+                        <div class="form-group">
+                            <label data-error="wrong" data-success="right" for="editPageForm-title" class="col-form-label">Заголовок</label>
+                            <input type="text" id="editPageForm-title" class="form-control validate" value="">
+                        </div>
+                        <div class="form-group">
+                            <label data-error="wrong" data-success="right" for="editPageForm-description" class="col-form-label">Полное название</label>
+                            <input type="text" id="editPageForm-description" class="form-control validate" value="">
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editPageForm-bgcolor" class="col-sm-5 col-form-label">Цвет фона плитки</label>
+                            <div class="col-sm-7">
+                                <input type="color" id="editPageForm-bgcolor" class="form-control validate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editPageForm-border-right-width" class="col-sm-5 col-form-label">Правая граница</label>
+                            <div class="col-sm-4">
+                                <input type="number" id="editPageForm-border-right-width" class="form-control validate" value="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="color" id="editPageForm-border-right-color" class="form-control validate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editPageForm-border-left-width" class="col-sm-5 col-form-label">Левая граница</label>
+                            <div class="col-sm-4">
+                                <input type="number" id="editPageForm-border-left-width" class="form-control validate" value="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="color" id="editPageForm-border-left-color" class="form-control validate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editPageForm-border-top-width" class="col-sm-5 col-form-label">Верхняя граница</label>
+                            <div class="col-sm-4">
+                                <input type="number" id="editPageForm-border-top-width" class="form-control validate" value="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="color" id="editPageForm-border-top-color" class="form-control validate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editPageForm-border-bottom-width" class="col-sm-5 col-form-label">Нижняя граница</label>
+                            <div class="col-sm-4">
+                                <input type="number" id="editPageForm-border-bottom-width" class="form-control validate" value="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="color" id="editPageForm-border-bottom-color" class="form-control validate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editPageForm-title-font-size" class="col-sm-5 col-form-label">Шрифт</label>
+                            <div class="col-sm-4">
+                                <input type="number" id="editPageForm-title-font-size" class="form-control validate" value="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="color" id="editPageForm-title-font-color" class="form-control validate" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-dark rounded-pill" data-dismiss="modal" aria-label="Close">Закрыть</button>
+                        <button id="editPageFormCommitBtn" type="button" class="btn btn-dark rounded-pill">Применить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block edit_link_dialog %}
+        <div class="modal fade" id="editLinkForm" tabindex="-1" role="dialog" aria-labelledby="editLinkFormLabel"
+          aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold">Редактирование ссылки</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mx-3">
+                        <div class="form-group">
+                            <label data-error="wrong" data-success="right" for="editLinkForm-title" class="col-form-label">Заголовок</label>
+                            <input type="text" id="editLinkForm-title" class="form-control validate" value="">
+                        </div>
+                        <div class="form-group">
+                            <label data-error="wrong" data-success="right" for="editLinkForm-url" class="col-form-label">Адрес ссылки</label>
+                            <input type="text" id="editLinkForm-url" class="form-control validate" value="">
+                        </div>
+                        <div class="form-group">
+                            <label data-error="wrong" data-success="right" for="editLinkForm-description" class="col-form-label">Полное название</label>
+                            <input type="text" id="editLinkForm-description" class="form-control validate" value="">
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editLinkForm-bgcolor" class="col-sm-5 col-form-label">Цвет фона плитки</label>
+                            <div class="col-sm-7">
+                                <input type="color" id="editLinkForm-bgcolor" class="form-control validate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editLinkForm-border-right-width" class="col-sm-5 col-form-label">Правая граница</label>
+                            <div class="col-sm-4">
+                                <input type="number" id="editLinkForm-border-right-width" class="form-control validate" value="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="color" id="editLinkForm-border-right-color" class="form-control validate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editLinkForm-border-left-width" class="col-sm-5 col-form-label">Левая граница</label>
+                            <div class="col-sm-4">
+                                <input type="number" id="editLinkForm-border-left-width" class="form-control validate" value="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="color" id="editLinkForm-border-left-color" class="form-control validate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editLinkForm-border-top-width" class="col-sm-5 col-form-label">Верхняя граница</label>
+                            <div class="col-sm-4">
+                                <input type="number" id="editLinkForm-border-top-width" class="form-control validate" value="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="color" id="editLinkForm-border-top-color" class="form-control validate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editLinkForm-border-bottom-width" class="col-sm-5 col-form-label">Нижняя граница</label>
+                            <div class="col-sm-4">
+                                <input type="number" id="editLinkForm-border-bottom-width" class="form-control validate" value="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="color" id="editLinkForm-border-bottom-color" class="form-control validate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editLinkForm-title-font-size" class="col-sm-5 col-form-label">Шрифт</label>
+                            <div class="col-sm-4">
+                                <input type="number" id="editLinkForm-title-font-size" class="form-control validate" value="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="color" id="editLinkForm-title-font-color" class="form-control validate" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-dark rounded-pill" data-dismiss="modal" aria-label="Close">Закрыть</button>
+                        <button id="editLinkFormCommitBtn" type="button" class="btn btn-dark rounded-pill">Применить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block edit_stub_dialog %}
+        <div class="modal fade" id="editStubForm" tabindex="-1" role="dialog" aria-labelledby="editStubFormLabel"
+          aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold">Редактирование заглушки</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mx-3">
+                        <div class="form-group">
+                            <label data-error="wrong" data-success="right" for="editStubForm-description" class="col-form-label">Полное название</label>
+                            <input type="text" id="editStubForm-description" class="form-control validate" value="">
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editStubForm-bgcolor" class="col-sm-5 col-form-label">Цвет фона плитки</label>
+                            <div class="col-sm-7">
+                                <input type="color" id="editStubForm-bgcolor" class="form-control validate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editStubForm-border-right-width" class="col-sm-5 col-form-label">Правая граница</label>
+                            <div class="col-sm-4">
+                                <input type="number" id="editStubForm-border-right-width" class="form-control validate" value="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="color" id="editStubForm-border-right-color" class="form-control validate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editStubForm-border-left-width" class="col-sm-5 col-form-label">Левая граница</label>
+                            <div class="col-sm-4">
+                                <input type="number" id="editStubForm-border-left-width" class="form-control validate" value="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="color" id="editStubForm-border-left-color" class="form-control validate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editStubForm-border-top-width" class="col-sm-5 col-form-label">Верхняя граница</label>
+                            <div class="col-sm-4">
+                                <input type="number" id="editStubForm-border-top-width" class="form-control validate" value="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="color" id="editStubForm-border-top-color" class="form-control validate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label data-error="wrong" data-success="right" for="editStubForm-border-bottom-width" class="col-sm-5 col-form-label">Нижняя граница</label>
+                            <div class="col-sm-4">
+                                <input type="number" id="editStubForm-border-bottom-width" class="form-control validate" value="">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="color" id="editStubForm-border-bottom-color" class="form-control validate" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-dark rounded-pill" data-dismiss="modal" aria-label="Close">Закрыть</button>
+                        <button id="editStubFormCommitBtn" type="button" class="btn btn-dark rounded-pill">Применить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+{% endblock %}

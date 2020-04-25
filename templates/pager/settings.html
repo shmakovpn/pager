@@ -1,0 +1,45 @@
+{% extends './base.html' %}
+{% load static %}
+{% block title %}Настройки - {{ user }}{% endblock %}
+
+{% block gridstackjs %}
+{% endblock %}
+
+{% block this %}
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <a class="navbar-brand" href="{% url package|add:':index' %}">
+            <ion-icon name="ios-home" style="vertical-align: middle" role="img" class="md hydrated" aria-label="grid"></ion-icon>В начало
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <div class="my-2 my-lg-0">
+                <div>{{ user.username }}</div>
+                <a class="button text-white" href="{% url package|add:':logout' %}">Выход</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- создает отступ сверху от меню навигации -->
+    <div class="container-fluid" style="padding: 28px 2rem;">
+	</div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+         <h2>Октрыть доступ к профилю другим пользователям</h2>
+
+             {% for user in users %}
+                 <div class="row">
+                     <div class="col-sm">{{ user }}</div>
+                 </div>
+             {% endfor %}
+    </div>
+{% endblock %}

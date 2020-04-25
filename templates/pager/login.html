@@ -1,0 +1,63 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title %}Вход{% endblock %}
+{% block gridstackjs %}{% endblock %}
+
+{% block this %}
+    <link rel="stylesheet" href="{% static package|add:'/this/login.css' %}" />
+{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h3>Вход</h3>
+			</div>
+			<div class="card-body">
+                {% if login_failed %}
+                    <div class="row text-center text-white">
+                        Ошибка авторизации. Попробуйте еще раз!!
+                    </div>
+                {% endif %}
+				<form action="" method="post">
+                    {% csrf_token %}
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+						</div>
+						<input name="username" type="text" class="form-control" placeholder="username">
+					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-key"></i></span>
+						</div>
+						<input name="password" type="password" class="form-control" placeholder="password">
+					</div>
+					<div class="row align-items-center remember">
+						<input name="remember" type="checkbox" checked="checked">Запомнить меня
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Вход" class="btn float-right login_btn">
+					</div>
+				</form>
+			</div>
+			<div class="card-footer">
+                <div class="d-flex justify-content-center text-white">
+                    Используйте учетную запись для входа в компьютер,
+                    например "example@krw.oao.rzd"
+                </div>
+				<!--<div class="d-flex justify-content-center links">
+					Don't have an account?<a href="#">Sign Up</a>
+				</div>
+				<div class="d-flex justify-content-center">
+					<a href="#">Forgot your password?</a>
+				</div>-->
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

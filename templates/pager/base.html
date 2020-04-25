@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>{% block title %}Пример gridstackjs{% endblock %}</title>
+
+    {% block shortcut %}
+        <link rel="shortcut icon" href="{% static package|add:'/favicon.ico' %}" type="image/x-icon">
+        <link rel="icon" href="{% static package|add:'/favicon.ico' %}" type="image/x-icon">
+    {% endblock %}
+
+    {% block jquery %}
+        <script src="{% static package|add:'/jquery/jquery-3.4.1.js' %}"></script>
+        <script src="{% static package|add:'/jquery/jquery.ui.touch-punch.js' %}"></script>
+    {% endblock %}
+
+    {% block bootstrap %}
+        <link rel="stylesheet" href="{% static package|add:'/bootstrap/css/bootstrap.css' %}" />
+        <script src="{% static package|add:'/bootstrap/js/bootstrap.bundle.js' %}"></script>
+    {% endblock %}
+
+    {% block gridstackjs %}
+        <link rel="stylesheet" href="{% static package|add:'/gridstackjs/gridstack.css' %}" />
+        <script src="{% static package|add:'/gridstackjs/gridstack.js' %}"></script>
+        <script src="{% static package|add:'/gridstackjs/jquery-ui.js' %}"></script>
+        <script src="{% static package|add:'/gridstackjs/gridstack.jQueryUI.js' %}"></script>
+    {% endblock %}
+
+    {% block this %}
+        <link rel="stylesheet" href="{% static package|add:'/this/style.css' %}" />
+        <script src="{% static package|add:'/this/init.js' %}"></script>
+    {% endblock %}
+
+    {% block ionicons %}
+        <script type="module" src="{% static package|add:'/ionicons/ionicons.esm.js' %}"></script>
+        <script nomodule="" src="{% static package|add:'/ionicons/ionicons.js' %}"></script>
+    {% endblock %}
+
+</head>
+<body style="cursor: auto;">
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>
