@@ -1,0 +1,2 @@
+# binaries to install python-ldap on Windows
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#python-ldap
