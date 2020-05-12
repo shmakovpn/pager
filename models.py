@@ -258,3 +258,16 @@ class DomainController(models.Model):
         dc: DomainController = cls()
         dc.ip = ip
         dc.save()
+
+
+class LocalUser(models.Model):
+    """
+    Пользователи, для которых включена локальная версия Плиток через Nextcloud
+    2020-05-08
+    """
+    user = models.OneToOneField(to=User, on_delete=models.CASCADE, null=False)
+    nextcloud_user = models.CharField(max_length=255, null=False, unique=True)
+    enabled = models.BooleanField(null=False, default=True)
+
+    def __str__(self):
+        return f'{self.user.username} -> {self.nextcloud_user} {"Enabled" if self.enabled else "disabled"}'

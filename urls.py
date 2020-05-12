@@ -18,6 +18,8 @@ from .converters import *
 
 # import views
 from .views import *
+# import api views
+from .apiviews import *
 
 register_converter(TilePathConverter, 'tile_path')
 register_converter(DomainUserConverter, 'domain_user')
@@ -33,6 +35,11 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     # profile
     path('profile/<tile_path:tile_path><domain_user:username>.html', ProfileView.as_view(), name='profile'),
+    # api list of user pages
+    path('api/pages/<int:userid>/', ListUserPages.as_view(), name='list_pages'),
+    # api list of local user для которых включена локальная версия в Nextcloud
+    path('api/users/', ListLocalUsers.as_view(), name='list_users'),
+    # local view for particular page
     path('local/<tile_path:tile_path><domain_user:username>.html', LocalProfileView.as_view(), name='local'),
     # settings
     path('settings/', SettingsView.as_view(), name='settings'),

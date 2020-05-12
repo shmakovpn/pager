@@ -27,3 +27,4 @@ six==1.14.0
 sqlparse==0.3.0
 uritemplate==3.0.1
 urllib3==1.25.7
+djangorestframework==3.11.0

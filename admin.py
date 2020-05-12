@@ -38,6 +38,12 @@ class LinkAdmin(TileAbstractBaseAdmin):
     search_fields = TileAbstractBaseAdmin.search_fields + ('url_pattern', )
 
 
+class LocalUserAdmin(admin.ModelAdmin):
+    pass
+
+
 # Register your models here.
 admin.site.register(Page, PageAdmin)
 admin.site.register(Link, LinkAdmin)
+admin.site.register(LocalUser, LocalUserAdmin)
+
