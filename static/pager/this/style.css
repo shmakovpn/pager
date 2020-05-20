@@ -105,6 +105,10 @@ section {
     padding-top: 1px;
 }
 
+.breadcrumb-nav-bar-local {
+    top: 48px;
+}
+
 .breadcrumb {
     border: none;
     font-size: 12px;

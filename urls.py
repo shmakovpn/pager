@@ -35,12 +35,14 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     # profile
     path('profile/<tile_path:tile_path><domain_user:username>.html', ProfileView.as_view(), name='profile'),
+    # api a user page
+    path('api/page/<int:userid>/<tile_path:tile_path>', LocalPage.as_view(), name='local_page'),
     # api list of user pages
     path('api/pages/<int:userid>/', ListUserPages.as_view(), name='list_pages'),
     # api list of local user для которых включена локальная версия в Nextcloud
     path('api/users/', ListLocalUsers.as_view(), name='list_users'),
-    # local view for particular page
-    path('local/<tile_path:tile_path><domain_user:username>.html', LocalProfileView.as_view(), name='local'),
+    # # local view for particular page
+    # path('local/<tile_path:tile_path><domain_user:username>.html', LocalProfileView.as_view(), name='local'),
     # settings
     path('settings/', SettingsView.as_view(), name='settings'),
     # swagger

@@ -71,14 +71,14 @@ class IndexView(LoginRequiredMixin, AbstractBaseView):
         return redirect(reverse(f'{__package__}:profile', kwargs={'username': request.user, 'tile_path': ''}))
 
 
-class LocalProfileView(AbstractBaseView):
-    """
-    User profile page for local usage
-    2020-04-09
-    """
-    def get(self, request: WSGIRequest, username: str, tile_path: str) -> HttpResponse:
-        print(f"request host={request.get_host()}:{request.get_port()}")
-        return HttpResponse("Hello from LocalProfileView")
+# class LocalProfileView(AbstractBaseView):
+#     """
+#     User profile page for local usage
+#     2020-04-09
+#     """
+#     def get(self, request: WSGIRequest, username: str, tile_path: str) -> HttpResponse:
+#         print(f"request host={request.get_host()}:{request.get_port()}")
+#         return HttpResponse("Hello from LocalProfileView")
 
 
 class ProfileView(LoginRequiredMixin, AbstractBaseView):

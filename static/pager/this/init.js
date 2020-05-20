@@ -10,6 +10,17 @@ function setModifiedMode() {
     modifiedMode = true;  // устанавливаем флаг наличие несохраненных изменений
 }
 
+// возвращает true в случае локальной версии
+// 2020-05-20
+function isLocal() {
+    if($('#local-flag').length) {
+        console.log('isLocal=true')
+        return true;
+    }
+    console.log('isLocal=false')
+    return false;
+}
+
 // возвращает словарь с данными о плитке el
 // 2019-12-25,2020-02-06, 2020-02-10
 function getTileData(el) {
@@ -751,22 +762,27 @@ function onDisableEditMode(event) {
             url = url.replace("{yyyy}", getFullYear());
             // проверим, что ссылка url способна открываться, прежде чем ее открыть
             if(/asfo(-\d+)?\.krw\.oao\.rzd/i.test(url)) {
-                $.ajax({
-                    url: url,
-                    cache: false,
-                    type: 'HEAD',
-                    async: false,
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        alert('Страница недоступна');
-                        // console.log(jqXHR);
-                        // console.log(textStatus);
-                        // console.log(errorThrown);
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                        console.log('asfo page is available url='+url);
-                        window.open(url, '_blank');
-                    }
-                });
+                if(!isLocal()) {
+                    $.ajax({
+                        url: url,
+                        cache: false,
+                        type: 'HEAD',
+                        async: false,
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert('Страница недоступна');
+                            // console.log(jqXHR);
+                            // console.log(textStatus);
+                            // console.log(errorThrown);
+                        },
+                        success: function (data, textStatus, jqXHR) {
+                            console.log('asfo page is available url=' + url);
+                            window.open(url, '_blank');
+                        }
+                    });
+                } else {
+                    let local_url = url.replace(/asfo(-\d+)?\.krw\.oao\.rzd\\/i, $('#local-flag').text());
+                    window.open(local_url, '_blank');
+                }
             } else {
                 window.open(url, '_blank');
             }

@@ -1,0 +1,84 @@
+{% extends './profile.html' %}
+{% block title %}Плитки - {{ user }}{% endblock %}
+
+{% block shortcut %}
+    <link rel="shortcut icon" href="../{{ root_level }}plitki_common/static/pager/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../{{ root_level }}plitki_common/static/pager/favicon.ico" type="image/x-icon">
+{% endblock %}
+
+{% block jquery %}
+    <script src="../{{ root_level }}plitki_common/static/pager/jquery/jquery-3.4.1.js"></script>
+    <script src="../{{ root_level }}plitki_common/static/pager/jquery/jquery.ui.touch-punch.js"></script>
+{% endblock %}
+
+{% block bootstrap %}
+    <link rel="stylesheet" href="../{{ root_level }}plitki_common/static/pager/bootstrap/css/bootstrap.css" />
+    <script src="../{{ root_level }}plitki_common/static/pager/bootstrap/js/bootstrap.bundle.js"></script>
+{% endblock %}
+
+{% block gridstackjs %}
+    <link rel="stylesheet" href="../{{ root_level }}plitki_common/static/pager/gridstackjs/gridstack.css" />
+    <script src="../{{ root_level }}plitki_common/static/pager/gridstackjs/gridstack.js"></script>
+    <script src="../{{ root_level }}plitki_common/static/pager/gridstackjs/jquery-ui.js"></script>
+    <script src="../{{ root_level }}plitki_common/static/pager/gridstackjs/gridstack.jQueryUI.js"></script>
+{% endblock %}
+
+{% block this %}
+    <link rel="stylesheet" href="../{{ root_level }}plitki_common/static/pager/this/style.css" />
+    <script src="../{{ root_level }}plitki_common/static/pager/this/init.js"></script>
+{% endblock %}
+
+{% block ionicons %}
+    <script type="module" src="../{{ root_level }}plitki_common/static/pager/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="../{{ root_level }}plitki_common/static/pager/ionicons/ionicons.js"></script>
+{% endblock %}
+
+{% block navbar %}
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li id="calendar-btn" class="nav-item nav-item-highlight">
+                    <a  class="nav-link" href="#">
+                        <ion-icon name="calendar" style="vertical-align: middle" role="img" class="md hydrated" aria-label="grid"></ion-icon>
+                        <input type="date" id="calendar" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- создает отступ сверху от меню навигации -->
+    <div class="container-fluid" style="padding: 28px 2rem;">
+	</div>
+
+    {% block breadcrumbs %}
+        {% if breadcrumbs %}
+            <nav aria-label="breadcrumb" class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top breadcrumb-nav-bar breadcrumb-nav-bar-local">
+              <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{{ root_level }}index.html">Home</a></li>
+                  {% for item in breadcrumbs.items %}
+                      <li class="breadcrumb-item"><a href="{{ item.url }}">{{ item.title }}</a></li>
+                  {% endfor %}
+                  <li class="breadcrumb-item active" aria-current="page">{{ breadcrumbs.last }}</li>
+              </ol>
+            </nav>
+            <!-- создает отступ сверху от хлебных крошек -->
+            <div class="container-fluid" style="padding: 10px 2rem;">
+            </div>
+        {% endif %}
+    {% endblock %}
+{% endblock %}
+
+{% block local %}
+    <div id="local-flag" style="display: none;">../{{ root_level }}</div>
+{% endblock %}
+
+{% block edit_page_dialog %}{% endblock %}
+{% block edit_link_dialog %}{% endblock %}
+{% block edit_stub_dialog %}{% endblock %}
