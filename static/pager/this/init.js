@@ -780,7 +780,8 @@ function onDisableEditMode(event) {
                         }
                     });
                 } else {
-                    let local_url = url.replace(/asfo(-\d+)?\.krw\.oao\.rzd\\/i, $('#local-flag').text());
+                    let local_url = url.replace(/^.*asfo(-\d+)?\.krw\.oao\.rzd\//i, $('#local-flag').text());
+                    console.log('local_url='+local_url);
                     window.open(local_url, '_blank');
                 }
             } else {
