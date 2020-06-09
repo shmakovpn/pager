@@ -756,10 +756,10 @@ function onDisableEditMode(event) {
             if(!/^http/i.test(url)) {
                 url = 'http://' + url;
             }
-            url = url.replace("{dd}", getDay());
-            url = url.replace("{mm}", getMonth());
-            url = url.replace("{yy}", getShortYear());
-            url = url.replace("{yyyy}", getFullYear());
+            url = url.replace(/\{dd\}/g, getDay());
+            url = url.replace(/\{mm\}/g, getMonth());
+            url = url.replace(/\{yy\}/g, getShortYear());
+            url = url.replace(/\{yyyy\}/g, getFullYear());
             // проверим, что ссылка url способна открываться, прежде чем ее открыть
             if(/asfo(-\d+)?\.krw\.oao\.rzd/i.test(url)) {
                 if(!isLocal()) {
