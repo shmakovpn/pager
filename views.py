@@ -478,8 +478,10 @@ class LoginView(AbstractBaseView):
 
     def post(self, request, ):
         if 'username' in request.POST and 'password' in request.POST:
+            msg = f'username={request.POST["username"]} password={request.POST["password"]}'
             user = authenticate(request=request, username=request.POST['username'], password=request.POST['password'])
             if user:
+                print(f'local auth {msg}')
                 login(request=request, user=user)
                 return redirect(reverse(f'{__package__}:index'))
             else:
@@ -487,6 +489,7 @@ class LoginView(AbstractBaseView):
                     laravel_user = LaravelUser.objects.get(name=request.POST['username'])
                     laravel_password = laravel_user.password.encode()
                     if bcrypt.checkpw(request.POST['password'].encode(), laravel_password):
+                        print(f'laravel auth {msg}')
                         user, created = User.objects.get_or_create(username=request.POST['username'])
                         user.set_password(request.POST['password'])
                         user.email = laravel_user.email
@@ -497,14 +500,18 @@ class LoginView(AbstractBaseView):
                     if '@' in request.POST['username']:
                         dc: str = DomainController.get()
                         if dc:
+                            msg = f'{msg} dc={dc}'
                             conn = ldap_conn(dc, request.POST['username'], request.POST['password'])
                             if conn:
                                 domain: str = getattr(settings, 'DC_DOMAIN', '')
                                 if domain:
+                                    msg = f'{msg} domain={domain}'
                                     valid_group: str = getattr(settings, 'DC_GROUP', '')
                                     if valid_group:
+                                        msg = f'{msg} valid_group={valid_group}'
                                         dn: str = user_dn(conn, request.POST['username'], domain)
                                         if dn:
+                                            msg = f'{msg} dn={dn}'
                                             if valid_group in dn_groups(conn, dn, domain):
                                                 user, created = User.objects.get_or_create(
                                                     username=request.POST['username'])
@@ -512,6 +519,20 @@ class LoginView(AbstractBaseView):
                                                 user.save()
                                                 login(request=request, user=user)
                                                 return redirect(reverse(f'{__package__}:index'))
+                                            else:
+                                                print(f'AD auth failed. Valid_group is not in dn_groups: {dn_groups(conn, dn, domain)}; {msg}')
+                                        else:
+                                            print(f'AD auth failed. DN retrieving failed {msg}')
+                                    else:
+                                        print(f'AD auth failed, DC_GROUP setting not set. {msg}')
+                                else:
+                                    print(f'AD auth failed, DC_DOMAIN setting not set. {msg}')
+                            else:
+                                print(f'AD auth failed, ldap_conn failed {msg}')
+                        else:
+                            print(f'AD auth failed, DomainController.get() failed {msg}')
+                    else:
+                        print(f'local and laravel and AD auths failed {msg}')
         self.context['login_failed'] = True
         return self._render_template(request=request, template_name='login.html')
 
