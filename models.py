@@ -201,6 +201,7 @@ class Link(PageLinkAbstractBase):
     2019-12-23
     """
     url_pattern = models.CharField(max_length=500, null=False, default='')
+    owner = models.CharField(max_length=100, null=True, default='')
 
     def __str__(self):
         return f"Link(id={self.id}, title='{self.title}', user={self.user}, path='{self.path}', url_pattern='{self.url_pattern}')"
