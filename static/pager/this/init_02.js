@@ -53,6 +53,7 @@ function getTileData(el) {
         let titleFontSize = parseInt($(el).find('.tileTitleFontSize').text());
         if(Number.isNaN(titleFontSize))titleFontSize=12;
         let titleFontColor = $(el).find('.tileTitleFontColor').text().replace('#','');
+        let owner = $(el).find('.tileOwner').text();
         return {
             x: data.x,
             y: data.y,
@@ -76,6 +77,7 @@ function getTileData(el) {
             border_bottom_color: borderBottomColor,
             title_font_size: titleFontSize,
             title_font_color: titleFontColor,
+            owner: owner
         };
     } catch (e) {
         console.log("An error has occurred in getTileData: "+e.toString());
@@ -424,6 +426,7 @@ function showLinkEditDialog(tile) {
     let borderBottomColor = selectedTile.find('.tileBorderBottomColor').text();  // берем цвет нижней границы рамки из плитки
     let titleFontColor = selectedTile.find('.tileTitleFontColor').text();  // берем цвет заголовка плитки из плитки
     let urlPattern = selectedTile.find('.url_pattern').text();  // берем адрес ссылки из плитки
+    let owner = selectedTile.find('.tileOwner').text();  // берем ответственного за наличие справки в АСФО из плтики
     $('#editLinkForm-title').val(title);  // помещаем текст заголовка плитки в поле диалогового окна
     $('#editLinkForm-description').val(description);  // помещаем текст подробного описания плитки в поле диалогового окна
     if(bgcolor==='') {
@@ -462,6 +465,7 @@ function showLinkEditDialog(tile) {
         $('#editLinkForm-title-font-color').val('#'+titleFontColor.replace('#',''));
     }
     $('#editLinkForm-url').val(urlPattern);  // помещаем адрес ссылки плитки в поле диалогового окна
+    $('#editLinkForm-owner').val(owner);  // помещаем отвественного за наличие плитки в АСФО в поле диалогового окна
     $('#editLinkFormCommitBtn').off('click');  // удаляем обработчик клика кнопки "применить" диалогового окна (если таковой был)
     // дабавляем новый обработчик клика кнопки "применить" диалогового окна
     $('#editLinkFormCommitBtn').click(function (event) {
@@ -504,6 +508,7 @@ function showLinkEditDialog(tile) {
         let newBorderBottomColor = $('#editLinkForm-border-bottom-color').val().replace('#','');  // берем цвет нижней границы плитки из диалогового окна
         let newTitleFontColor = $('#editLinkForm-title-font-color').val().replace('#','');  // берем цвет заголовка плитки из диалогового окна
         let newUrlPattern = $('#editLinkForm-url').val();  // берем адрес ссылки из диалогового окна
+        let newOwner = $('#editLinkForm-owner').val();  // берем ответственного за наличие плитки в АСФО из диалогового окна
         if((title !== newTitle) || (urlPattern !== newUrlPattern) || (description !== newDescription)
             || (bgcolor !== newBgcolor)
             || (borderRightWidth !== newBorderRightWidth)
@@ -515,7 +520,8 @@ function showLinkEditDialog(tile) {
             || (borderTopColor !== newBorderTopColor)
             || (borderBottomColor !== newBorderBottomColor)
             || (titleFontSize !== newTitleFontSize)
-            || (titleFontColor !== newTitleFontColor)) {
+            || (titleFontColor !== newTitleFontColor)
+            || (owner !== newOwner) ) {
             setModifiedMode();  // активируем в меню кнопки "сохранить" и "отменить"
             selectedTile.find('.tileTitle').text(newTitle);  // меняем заголовок в плитке
             selectedTile.find('.tileDescription').text(newDescription);  // меняем текст подробного описания в плитке
@@ -542,6 +548,7 @@ function showLinkEditDialog(tile) {
             selectedTile.css('border-bottom-color','#'+newBorderBottomColor);  // перекрашиваем нижнюю границу плитки в новый цвет
             selectedTile.find('.tileTitle').css('color','#'+newTitleFontColor);  // перекрашиваем заголовок плитки в новый цвет
             selectedTile.find('.url_pattern').text(newUrlPattern);  // меняем адрес ссылки в плитке
+            selectedTile.find('.tileOwner').text(newOwner);  // меняем ответственного за наличие справки в АСФО в плитке
         }
         $('#editLinkForm').modal('hide');  // закрываем диалоговое окно
     });

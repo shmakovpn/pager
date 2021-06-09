@@ -137,6 +137,7 @@
                                 <div class="tileBorderBottomColor"></div><!-- цвет нижней границы плитки в формате #RRGGBB -->
                                 <div class="tileTitleFontSize"></div><!-- размер шрифта заголовка плитки в px -->
                                 <div class="tileTitleFontColor"></div><!-- цвет шрифта заголовка плитки в формате #RRGGBB -->
+                                <div class="tileOwner"></div><!-- ответственный за наличие справки в АСФО -->
                             </div>
                             <!-- end данные плитки -->
                             <table>
@@ -227,6 +228,7 @@
                                             <div class="tileBorderBottomColor">{{ link.border_bottom_color }}</div><!-- цвет нижней границы плитки в формате #RRGGBB -->
                                             <div class="tileTitleFontSize">{{ link.title_font_size }}</div><!-- размер шрифта заголовка плитки в px -->
                                             <div class="tileTitleFontColor">{{ link.title_font_color }}</div><!-- цвет шрифта заголовка плитки в формате #RRGGBB -->
+                                            <div class="tileOwner">{{ link.owner }}</div><!-- ответственный за наличие справки в АСФО -->
                                         </div>
                                         <!-- end данные плитки -->
                                         <table>
@@ -384,6 +386,10 @@
                         <div class="form-group">
                             <label data-error="wrong" data-success="right" for="editLinkForm-description" class="col-form-label">Полное название</label>
                             <input type="text" id="editLinkForm-description" class="form-control validate" value="">
+                        </div>
+                        <div class="form-group form-group-last">
+                            <label data-error="wrong" data-success="right" for="editLinkForm-owner" class="col-form-label">Ответственный</label>
+                            <input type="text" id="editLinkForm-owner" class="form-control validate" value="">
                         </div>
                         <div class="form-group row">
                             <label data-error="wrong" data-success="right" for="editLinkForm-bgcolor" class="col-sm-5 col-form-label">Цвет фона плитки</label>

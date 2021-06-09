@@ -144,3 +144,15 @@ body {
 .tileClicked td {
     color: white !important;
 }
+
+#editLinkForm .form-group {
+    margin-bottom: 0;
+}
+
+#editLinkForm .form-group.form-group-last {
+    margin-bottom: 1rem;
+}
+
+#editLinkForm .form-group.row {
+    margin-bottom: 1rem;
+}

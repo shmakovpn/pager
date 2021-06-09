@@ -201,7 +201,8 @@ class ProfileView(LoginRequiredMixin, AbstractBaseView):
                                 border_top_color=tile['border_top_color'],
                                 border_bottom_color=tile['border_bottom_color'],
                                 title_font_size=tile['title_font_size'],
-                                title_font_color=tile['title_font_color'], )
+                                title_font_color=tile['title_font_color'],
+                    )
                     page.save()
                 elif tile['type'] == 'link':
                     link = Link(user=user,
@@ -223,7 +224,9 @@ class ProfileView(LoginRequiredMixin, AbstractBaseView):
                                 border_top_color=tile['border_top_color'],
                                 border_bottom_color=tile['border_bottom_color'],
                                 title_font_size=tile['title_font_size'],
-                                title_font_color=tile['title_font_color'], )
+                                title_font_color=tile['title_font_color'],
+                                owner=tile['owner'],
+                    )
                     link.save()
                 elif tile['type'] == 'stub':
                     stub = Stub(user=user,
@@ -317,6 +320,7 @@ class ProfileView(LoginRequiredMixin, AbstractBaseView):
                         link.border_bottom_color = tile['border_bottom_color']
                         link.title_font_size = tile['title_font_size']
                         link.title_font_color = tile['title_font_color']
+                        link.owner = tile['owner']
                         link.save()
                     except Page.DoesNotExist as e:
                         response = {
@@ -380,9 +384,11 @@ class ProfileView(LoginRequiredMixin, AbstractBaseView):
                         if tile['path'] == '':
                             Page.objects.filter(user=user, path__startswith=f"{tile['id']}").delete()
                             Link.objects.filter(user=user, path__startswith=f"{tile['id']}").delete()
+                            Stub.objects.filter(user=user, path__startswith=f"{tile['id']}").delete()
                         else:
                             Page.objects.filter(user=user, path__startswith=f"{tile['path']}/{tile['id']}").delete()
                             Link.objects.filter(user=user, path__startswith=f"{tile['path']}/{tile['id']}").delete()
+                            Stub.objects.filter(user=user, path__startswith=f"{tile['path']}/{tile['id']}").delete()
                         page.delete()
                     except Page.DoesNotExist as e:
                         response = {
